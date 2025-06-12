@@ -15,6 +15,7 @@ pagination.pagerSize = 5
 [languages]
   [languages.en]
     title = "Janszczyrek Blog"
+    description = "This is where I share my journey of experimenting with my personal homelab. In my spare time, I enjoy exploring new technologies, tinkering with hardware and software setups, and documenting the lessons learned along the way. Whether it's self-hosted services, network configurations, or automation projects, you'll find a growing collection of hands-on insights and real-world setups here."
     keywords = ""
     copyright = ""
     menuMore = "Show more"
