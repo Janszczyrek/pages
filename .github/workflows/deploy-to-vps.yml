@@ -1,0 +1,72 @@
+name: Deploy Hugo Blog to VPS
+
+on:
+  push:
+    branches: [ master ]  # Change to your default branch if different
+  workflow_dispatch:    # Allows manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: 'latest'
+        extended: true    # Set to false if you don't need Hugo Extended
+
+    - name: Build Hugo site
+      run: hugo --minify
+
+    - name: Deploy to VPS via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        port: ${{ secrets.VPS_PORT }}
+        script: |
+          # Create backup of current site
+          if [ -d "/var/www/html/backup" ]; then
+            rm -rf /var/www/html/backup
+          fi
+          if [ -d "/var/www/html" ]; then
+            cp -r /var/www/html /var/www/html/backup
+          fi
+          
+          # Create target directory if it doesn't exist
+          mkdir -p /var/www/html
+          
+          # Clear current site (except backup)
+          find /var/www/html -mindepth 1 -maxdepth 1 ! -name 'backup' -exec rm -rf {} +
+
+    - name: Copy files to VPS
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        port: ${{ secrets.VPS_PORT }}
+        source: "public/*"
+        target: "/var/www/html"
+        strip_components: 1  # Remove 'public/' from the path
+
+    - name: Set proper permissions
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        port: ${{ secrets.VPS_PORT }}
+        script: |
+          # Set proper ownership and permissions
+          sudo chown -R lighttpd:lighttpd /var/www/html
+          sudo chmod -R 755 /var/www/html
+          # Fix file permissions (directories stay 755, files become 644)
+          find /var/www/html -type f -exec chmod 644 {} \;
