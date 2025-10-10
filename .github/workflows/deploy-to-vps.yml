@@ -33,18 +33,18 @@ jobs:
         port: ${{ secrets.VPS_PORT }}
         script: |
           # Create backup of current site
-          if [ -d "/var/www/html/backup" ]; then
-            rm -rf /var/www/html/backup
+          if [ -d "~/backup" ]; then
+            rm -rf ~/backup
           fi
           if [ -d "/var/www/html" ]; then
-            cp -r /var/www/html /var/www/html/backup
+            cp -r /var/www/html ~/backup
           fi
           
           # Create target directory if it doesn't exist
           mkdir -p /var/www/html
           
           # Clear current site (except backup)
-          find /var/www/html -mindepth 1 -maxdepth 1 ! -name 'backup' -exec rm -rf {} +
+          find /var/www/html -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
     - name: Copy files to VPS
       uses: appleboy/scp-action@v0.1.7
@@ -67,6 +67,6 @@ jobs:
         script: |
           # Set proper ownership and permissions
           sudo chown -R lighttpd:lighttpd /var/www/html
-          sudo chmod -R 755 /var/www/html
+          sudo chmod -R 775 /var/www/html
           # Fix file permissions (directories stay 755, files become 644)
-          find /var/www/html -type f -exec chmod 644 {} \;
+          find /var/www/html -type f -exec chmod 664 {} \;
