@@ -42,7 +42,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: https://janszczyrek.github.io/pages
+      url: https://janszczyrek.github.io
     runs-on: ubuntu-latest
     needs: build
     steps:
