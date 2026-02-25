@@ -1,4 +1,4 @@
-baseurl = "https://janszczyrek.github.io/pages"
+baseurl = "https://janszczyrek.github.io/pages/"
 languageCode = "en-us"
 theme = "terminal"
 pagination.pagerSize = 5
