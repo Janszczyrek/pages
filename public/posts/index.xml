@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Janszczyrek Blog</title>
+    <link>https://janszczyrek.github.io/posts/</link>
+    <description>Recent content in Posts on Janszczyrek Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 09 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://janszczyrek.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CI/CD pipeline for updating this site</title>
+      <link>https://janszczyrek.github.io/posts/post2/</link>
+      <pubDate>Thu, 09 Oct 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://janszczyrek.github.io/posts/post2/</guid>
+      <description>Intro Manually logging into remote server and copying over changed files can be tedious. As they say, if you&amp;rsquo;re doing something often and it cost you lot of time - automate it! In this post I want to show you how this blog is being updated after changes are made.
+Tech stack Im using Hugo - a go open-source framework for creating static websites. It&amp;rsquo;s really fast and easy to setup.</description>
+      <content>&lt;h2 id=&#34;intro&#34;&gt;Intro&lt;/h2&gt;
+&lt;p&gt;Manually logging into remote server and copying over changed files can be tedious. As they say, if you&amp;rsquo;re doing something often and it cost you lot of time - automate it! In this post I want to show you how this blog is being updated after changes are made.&lt;/p&gt;
+&lt;h2 id=&#34;tech-stack&#34;&gt;Tech stack&lt;/h2&gt;
+&lt;p&gt;Im using Hugo - a &lt;a href=&#34;https://gohugo.io/&#34;&gt;go&lt;/a&gt; open-source framework for creating static websites. It&amp;rsquo;s really fast and easy to setup. All pages are represented as Markdown files and are translated to HTML. For this site I&amp;rsquo;m using &lt;a href=&#34;https://themes.gohugo.io/themes/hugo-theme-terminal/&#34;&gt;Terminal&lt;/a&gt; theme, it&amp;rsquo;s cool isn&amp;rsquo;t it?
+All relevant files are sotred as git repository on GitHub. It enables me to use Github Actions for defining pipeline to copy site over SSH to my VPS.&lt;/p&gt;
+&lt;h2 id=&#34;how-it-works&#34;&gt;How it works?&lt;/h2&gt;
+&lt;p&gt;Every time when &lt;code&gt;main&lt;/code&gt; branch is pushed workflow &lt;code&gt;deploy-to-vps.yml&lt;/code&gt; is called. It creates temporary Ubuntu environment used for generating hugo&amp;rsquo;s &lt;code&gt;/public&lt;/code&gt; directory that stores ready to serve html files. Then it calls script which purpose is to copy these files to VPS using scp. Variables like hostname, port, username, key are stored as repository secrets.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Homelab tour 1</title>
+      <link>https://janszczyrek.github.io/posts/post1/</link>
+      <pubDate>Thu, 14 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://janszczyrek.github.io/posts/post1/</guid>
+      <description>Hi, in my very first blog post ever, I&amp;rsquo;m very excited to show you how and what is being hosted in my homelab. Let&amp;rsquo;s take a look around!
+Hardware In the past, when SBC&amp;rsquo;s weren&amp;rsquo;t as efficient and cheap as now I had been using an old Dell Optiplex PC for some time. Then I realised that I could lower my power bill as well as save some precious space in my room by switching to something smaller.</description>
+      <content>&lt;p&gt;Hi, in my very first blog post ever, I&amp;rsquo;m very excited to show you how and what is being hosted in my homelab. Let&amp;rsquo;s take a look around!&lt;/p&gt;
+&lt;h2 id=&#34;hardware&#34;&gt;Hardware&lt;/h2&gt;
+&lt;p&gt;In the past, when SBC&amp;rsquo;s weren&amp;rsquo;t as efficient and cheap as now I had been using an old Dell Optiplex PC for some time. Then I realised that I could lower my power bill as well as save some precious space in my room by switching to something smaller. I wanted to try something less popular than the Raspberry Pi so I decided to give the &lt;em&gt;Orange Pi Zero 3&lt;/em&gt; a try.
+It has a quad-core Allwinner H618 ARM CPU paired with 4GB of LPDDR4 RAM. As for peripherals it has a USB 2.0 port and most importantly a single gigabit NIC. I&amp;rsquo;m aware that those specs aren&amp;rsquo;t spectacular, but almost any modern smartphone lying around in a drawer will perform better, but considering my current needs it&amp;rsquo;s my sweet spot. This server could also be used as a Wake-On-LAN server in the future to turn on more powerful servers when needed.&lt;/p&gt;
+
+  &lt;figure class=&#34;center&#34; &gt;
+    &lt;img src=&#34;https://janszczyrek.github.io/img/orangepi.jpg&#34;  alt=&#34;Orange pi&#34;   /&gt;
+    
+      &lt;figcaption class=&#34;center&#34; &gt;Here I host my stuff :)&lt;/figcaption&gt;
+    
+  &lt;/figure&gt;
+
+
+&lt;h2 id=&#34;software&#34;&gt;Software&lt;/h2&gt;
+&lt;p&gt;As for the operating system, I&amp;rsquo;m using the Debian Bookworm image provided by Orange Pi. Mostly all of the services that I&amp;rsquo;m running are docker containers which are set up with docker compose. For now it&amp;rsquo;s sufficient.&lt;/p&gt;
+&lt;h2 id=&#34;connectivity&#34;&gt;Connectivity&lt;/h2&gt;
+&lt;p&gt;Sadly, my ISP doesn&amp;rsquo;t offer static public IP addresses and all inbound traffic is being blocked so I decided to use the &lt;a href=&#34;https://tailscale.com/&#34;&gt;Tailscale&lt;/a&gt; service. It&amp;rsquo;s a VPN solution built as a set of wireguard tunnels between each connected device. They offer a free tier up to 3 users and 100 devices, definitely check it out!&lt;/p&gt;
+&lt;h2 id=&#34;what-am-i-hosting&#34;&gt;What am i hosting?&lt;/h2&gt;
+&lt;h3 id=&#34;pi-hole&#34;&gt;Pi-hole&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://pi-hole.net/&#34;&gt;Pi-hole&lt;/a&gt; is a network-wide ad blocker that transforms how your entire home network handles unwanted traffic. By acting as a DNS sinkhole, this lightweight application intercepts and blocks advertisements. Pi-hole creates a centralized defense that protects every connected device, from smartphones and laptops to smart home gadgets. The magic happens at the DNS level, meaning you get ad-blocking coverage without installing separate extensions or apps. I also use it for convenient access to my other services by their domain name. Additional lists of unwanted domains could be attached. For example CERT publishes a warning list for domains that were flagged as phishing. However, the lists aren&amp;rsquo;t updated automatically - you need to manually update them from web UI from time to time or create a script that runs &lt;code&gt;pihole -up&lt;/code&gt; systematically.&lt;/p&gt;
+&lt;h3 id=&#34;smokeping&#34;&gt;Smokeping&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://oss.oetiker.ch/smokeping/&#34;&gt;SmokePing&lt;/a&gt; is a powerful network latency monitoring tool that provides incredible visual insight into your network&amp;rsquo;s performance and reliability. Unlike simple ping tests, SmokePing creates detailed, long-term graphs that track network latency, packet loss, and jitter across multiple targets. By probing network endpoints at regular intervals, it generates graphs that help you diagnose connectivity issues and understand network quality trends. That way - when my internet connection is down, I can tell who&amp;rsquo;s fault it is :).&lt;/p&gt;
+&lt;h3 id=&#34;uptime-kuma&#34;&gt;Uptime Kuma&lt;/h3&gt;
+&lt;p&gt;Similar to Smokeping this tool allows you to monitor various types of services. &lt;a href=&#34;https://uptimekuma.org/&#34;&gt;Uptime Kuma&lt;/a&gt; can monitor multiple types of services - ranging from HTTP, Docker containers to specific TCP ports. It comes with a notification system and a more modern looking UI than Smokeping. I&amp;rsquo;m using it to healthcheck this website.&lt;/p&gt;
+&lt;h3 id=&#34;immich&#34;&gt;Immich&lt;/h3&gt;
+&lt;p&gt;Digital album for all your photos and videos. Its UI has a Google Photos feel which looks really good. It provides additional features like searching photos by describing them and can recognise a person on a photo. &lt;a href=&#34;https://immich.app/&#34;&gt;Immich&lt;/a&gt; comes with a native mobile app with options for automatic backups and a web interface. Recommended!&lt;/p&gt;
+&lt;h3 id=&#34;nextcloud&#34;&gt;Nextcloud&lt;/h3&gt;
+&lt;p&gt;To go self-hosted solution for cloud storage. &lt;a href=&#34;https://nextcloud.com/&#34;&gt;Nextcloud&lt;/a&gt; functions like a personal GDrive or Dropbox, allowing file synchronization across devices and sharing them via a link. It comes with apps for various systems so you can use them on all your devices.&lt;/p&gt;
+&lt;h3 id=&#34;readeck&#34;&gt;Readeck&lt;/h3&gt;
+&lt;p&gt;It allows you to save interesting articles for reading later. &lt;a href=&#34;https://readeck.org/en/&#34;&gt;Readeck&lt;/a&gt; also provides an interface for reading them directly from web interface - you can highlight important ideas and also export selected articles as an e-book to read it on your e-ink reader.&lt;/p&gt;
+&lt;h3 id=&#34;freshrss&#34;&gt;FreshRSS&lt;/h3&gt;
+&lt;p&gt;Enables you to aggregate many different RSS channels into multiple feeds. &lt;a href=&#34;https://freshrss.org/index.html&#34;&gt;FreshRSS&lt;/a&gt; provides a category feature that allows organizing feeds into topical groups. It supports filtering by tags and many more. If you are keen on reading news the old way or trying to reduce time spent scrolling across many different news platforms you should check it out!&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Thank you for reading this post! I hope you learned something new. In my upcoming posts, I&amp;rsquo;ll be writing about how I can make my setup more secure, as well as how I organized my home LAN network - so stay tuned!&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>
