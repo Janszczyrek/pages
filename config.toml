@@ -24,7 +24,7 @@ pagination.pagerSize = 5
 
     [languages.en.params.logo]
       logoText = "Terminal"
-      logoHomeLink = "/"
+      logoHomeLink = "/pages/"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
